@@ -35,7 +35,7 @@ function Hero() {
           church, for the good of the Kingdom.
         </p>
       </div>
-      <div className="lg:absolute right-0 bottom-0 z-0">
+      <div className="lg:absolute -mt-16 lg:md-0 right-0 bottom-0 z-0 relative">
         <Image
           alt="Banner Image"
           src={JesusLaptop}
