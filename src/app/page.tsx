@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: "AI for Jesus",
   description:
     "Thoughtful and careful instructions on how to employ AI within the church, for the good of the Kingdom.",
+  alternates: {
+    canonical: process.env.DOMAIN,
+  },
 };
 
 function Hero() {

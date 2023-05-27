@@ -31,6 +31,9 @@ export async function generateMetadata(
   return {
     title: `${post.title} | ${(await parent).title}`,
     description: post.excerpt,
+    alternates: {
+      canonical: `${process.env.DOMAIN}/posts/${post.slug}`,
+    },
     openGraph: {
       images: [post.coverImage.url],
     },
