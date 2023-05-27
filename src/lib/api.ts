@@ -34,9 +34,9 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${
           preview
             ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN!
@@ -86,7 +86,7 @@ export async function getAllPostsWithSlug(): Promise<any[]> {
 export async function getAllPostsForHome(preview: boolean): Promise<any[]> {
   const entries = await fetchGraphQL(
     `query {
-      postCollection(order: date_DESC, preview: ${preview ? 'true' : 'false'}) {
+      postCollection(order: date_DESC, preview: ${preview ? "true" : "false"}) {
         items {
           ${POST_GRAPHQL_FIELDS}
         }
@@ -97,6 +97,22 @@ export async function getAllPostsForHome(preview: boolean): Promise<any[]> {
   return extractPostEntries(entries);
 }
 
+export async function getAllPostSlugs(preview: boolean): Promise<string[]> {
+  const entries = await fetchGraphQL(
+    `query {
+      postCollection(order: date_DESC, preview: ${preview ? "true" : "false"}) {
+        items {
+          ${POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview
+  );
+  return (entries?.data?.postCollection?.items || []).map(
+    (post: Post) => post.slug
+  );
+}
+
 export async function getPostAndMorePosts(
   slug: string,
   preview: boolean
@@ -104,7 +120,7 @@ export async function getPostAndMorePosts(
   const entry = await fetchGraphQL(
     `query {
       postCollection(where: { slug: "${slug}" }, preview: ${
-      preview ? 'true' : 'false'
+      preview ? "true" : "false"
     }, limit: 1) {
         items {
           ${POST_GRAPHQL_FIELDS}
@@ -116,7 +132,7 @@ export async function getPostAndMorePosts(
   const entries = await fetchGraphQL(
     `query {
       postCollection(where: { slug_not_in: "${slug}" }, order: date_DESC, preview: ${
-      preview ? 'true' : 'false'
+      preview ? "true" : "false"
     }, limit: 2) {
         items {
           ${POST_GRAPHQL_FIELDS}
